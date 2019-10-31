@@ -1,0 +1,184 @@
+/////////////////////////////////////////////////////////////////////
+//            User manual for QuickhullDisk version 1.0            //
+//                                                                 //																							
+// Contributors: Chanyoung Song, Joonghyun Ryu, and Deok-Soo Kim   //  
+//                                                                 //
+// Table of contents                                               //
+//                                                                 //
+// 0. Directory structure and files (#line: 18)                    //
+// 1. The algorithm implementation  (#line: 37)                    //
+// 2. Test driver                   (#line: 57)                    //
+// 3. Test data                     (#line: 126)                   //
+// 4. Result of test data           (#line: 151)                   //
+// 5. Portability evidence          (#line: 172)                   //
+// 6. Third party supporting code   (#line: 184)                   //
+//                                                                 //
+/////////////////////////////////////////////////////////////////////
+
+0. Directory structure and files
+This software submission consists of the following four directories.
+
+0.1) implementation: A directory for the source codes of QuickhullDisk which has two sub-directories: header (*.h) and cpp (*.cpp).
+0.2) test_driver: A directory for test driver programs of QuickhullDisk.		
+	- BuildWithVisualCPPComplier.bat: A batch file to build an excutable(file name: RunQuickhullDisk.exe) on MS Windows with Visual C++ compiler.		
+	- Makefile: A Make file to build an excutable(file name: RunQuickhullDisk) with g++ complier for both Linux and Mac.
+	- TestDriverForQuickhullDisk.cpp: The source code of a test driver program to run QuickhullDisk.
+	- TestAllExamplesWithQuickhullDisk_in_WIN.bat: A batch file to run the excutable(RunQuickhullDisk.exe) in batch mode on MS Windows.
+	- TestAllExamplesWithQuickhullDisk_in_LNX_or_MAC.sh: A shell script to run the excutable(RunQuickhullDisk) in batch mode on both Linux and Mac.
+	- QuickhullDiskVis.exe: An executable with GUI which runs on MS Windows.
+	- Manual_for_QuickhullDiskVis.pdf: One-page user manual for QuickhullDiskVis.
+0.3) test_data: A directory for test data files (i.e. input files) which has four sub-directories: RANDOM, MIXED, ON-BNDRY, and ON-A-LINE.
+0.4) result_of_test_data: A directory for computed results which has four sub-directories: RANDOM, MIXED, ON-BNDRY, and ON-A-LINE.
+0.5) full_data: A directory for full data files (i.e. input files) which is submitted(publicized) in Data in Brief.
+	- Refer to C. Song, J. Ryu, and D.-S. Kim, Benchmark Dataset for the Convex Hull of 2D Disks, Data in Brief (2019) for details.
+
+
+
+1. The algorithm implementation ("implementation" directory)
+QuickhullDisk is implemented in C++ language. 
+The classes used in this implementation are as follows. 
+(Classes have associated Header and CPP files; Source code contains comments if necessary.)
+
+1.1) Circle2D: A circle in the plane.
+1.2) CircularArc2D: An arc in the plane which is derived from CircularDisk2D class.
+1.3) CircularDisk2D: A disk in the plane which is derived from Circle2D class.
+1.4) ConstSet: A set of contants.
+1.5) ConvexHullOfDisks: A base class for convex hull problem of disks in the plane.
+1.6) FileIOForConvexHullOfDisks: File I/O.
+1.7) GeometricFunction2D: A set of utility functions for geometric computation.
+1.8) Line2D: A line segment in the plane.
+1.9) Point2D: A point in the plane.
+1.10) QuickhullDisk: A class for QuickhullDisk algorithm which is derived from ConvexHullOfDisks.
+1.11) RelativeOperator: Numerical operatations.
+1.12) TimeStatistics: A class for collecting time statistics.
+	
+
+	
+2. Test driver ("test_driver" directory)
+Before running test driver, you should build an executable using appropriate tool(s) for each platform/compiler combination. 
+This section shows how to build and run test driver.
+
+2.1) Build test driver
+After building an executable as follows, RunQuickhullDisk.exe is created on MS Windows and RunQuickhullDisk on Ubuntu or Mac.
+
+2.1.1) MS Windows (refer to https://docs.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=vs-2017)
+	- Run command prompt
+	- Change current directory to "test_driver"
+	- Type BuildWithVisualCPPComplier.bat
+2.1.2) Ubuntu or Mac (refer to https://www.gnu.org/software/make/manual/make.html)
+	- Run terminal
+	- Change current directory to "test_driver"
+	- Type make dep
+	- Type make
+
+2.2) Run test driver
+Change current directory to "test_driver".
+2.2.1) MS Windows
+	- RunQuickhullDisk.exe -i [input file name with path] -o [output hull disk file name with path]
+	- Example:
+		RunQuickhullDisk.exe -i ..\test_data\RANDOM\N10000.txt -o output\RANDOM\output_N10000.txt
+2.2.2) Ubuntu or Mac
+	- RunQuickhullDisk -i [input file name with path] -o [output hull disk file name with path]
+	- Example:
+		./RunQuickhullDisk -i ../test_data/RANDOM/N10000.txt -o output/RANDOM/output_N10000.txt
+2.2.3) Results of test driver program
+	If you run a test driver program with an input file, the following text is printed out on the screen and hull disks are written into a file.	
+	
+	An example with an input test data 'test_data\RANDOM\N10000.txt' on MS Windows.
+	2.2.3.1) Text message on screen
+	-----------------------------
+	1. Input arguments
+	 Input file: ..\test_data\RANDOM\N10000.txt
+	 Output file: output\RANDOM\output_N10000.txt
+	
+	2. Input disks
+	 #Input disks: 10000
+	
+	3. Output hull disks
+	 #Hull disks: 76
+	 QuickhullDisk comp. time: 0.009 sec
+	
+	4-1. Output hull boundary arcs and edges
+	 The length of hull boundary: 12052.407
+	 The first arc's start point: (-1915.086, -12.391),  end point: (-1915.090, -12.674),  hull disk id: 6468
+	 The first line's start point: (-1915.090, -12.674),  end point: (-1914.579, -86.758)
+	
+	4-2. Number of line segments in hull boundary
+	 # of total line segments: 75
+	 # of line segments whose length is less than 100.0: 25
+	-----------------------------
+	
+	2.2.3.2) Output hull disk file
+		output_N10000.txt is written in output directory that you choose.
+
+2.3) Batch run via test driver
+RunQuickhullDisk.exe (MS Windows) or RunQuickhullDisk(Ubuntu/Mac) can be run with all test data in test_data directory as follows.
+
+2.3.1) MS Windows
+	- Change current directory to "test_driver".
+	- Type TestAllExamplesWithQuickhullDisk_in_WIN.bat
+2.3.2) Ubuntu or Mac	
+	- Change current directory to "test_driver".
+	- Type TestAllExamplesWithQuickhullDisk_in_LNX_or_MAC.sh
+	
+
+
+3. Test data ("test_data" directory)
+We provide 40 test data files to test driver program.
+Test data has four groups: RANDOM, MIXED, ON-BNDRY, and ON-A-LINE. 
+Each group consists of 10 data files. 
+For the details on data, refer to our manuscript(paper).
+
+3.1) Test data (input) file format
+The first line contains an integer which denotes the number of input disks. 
+From second line a quadruplet (disk id, x-coordinate, y-coordinate, radius) takes one line.
+Note that no disk can have identical x-, y- cordinates, and radius with each other.	
+An example of input file:
+	10000
+	1	-616.199662	-1125.971775	4.325663
+	2	-1147.691683	-344.172489	2.648549
+	3	470.147956	655.178092	1.195288
+	4	-1129.024302	-935.775823	8.440168
+	5	1350.919579	-433.987244	1.130192
+	...
+	9999	1478.069095	1158.258124	9.222694
+	10000	291.575090	-686.290392	2.722159	
+
+3.2) Result file of test data (refer to Section 4. Result of test data)
+
+
+
+4. Result of test data ("result_of_test_data" directory)
+If you run the test driver program following the steps in Section 2.3, you will get the same output files as in "result of test data" directory.
+The directory has four sub-directories which corresponds to four groups of test data: RANDOM, MIXED, ON-BNDRY, and ON-A-LINE.
+After running the program, "output" directory is created under "test_driver" directory which contains the above-mentioned four sub-directories.
+
+4.1) Result file format of test data
+	The first line contains an integer which denotes the number of hull disks.
+	From second line a quadruplet (disk id, x-coordinate, y-coordinate, radius) takes one line.
+	Note that the second line is the same as the last line.
+	An example of output file:
+	76
+	6468	-1907.418845	-12.621028	7.671102
+	639	-1906.714416	-86.703525	7.864467	
+	1911	-1888.047035	-290.283636	8.694784
+	4702	-1889.455894	-318.343409	2.583178
+	...
+	8953	-1901.078980	194.598636	7.790307
+	6468	-1907.418845	-12.621028	7.671102	
+
+
+	
+5. Portability evidence
+We have compiled and tested the source codes of QuickhullDisk in the following three different combinations of platform/compiler/interpreter:
+
+5.1) Windows 10 with Visual C++ compiler (version: c++ 14.1),
+5.2) Ubuntu  16.04 LTS with g++ compiler (version: g++ 5.4.0), and
+5.3) MacOS High Sierra 10.13.6 with g++ compiler (version: g++ 4.2.1).
+
+We used the options /std:c++14 and -std=c++14 for Visual C++ and g++, respectively.
+For the compilation and test, we have installed MS Windows, Ubuntu, and MacOS on different hardwares.
+
+
+
+6. Third party supporting code: N/A
