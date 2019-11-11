@@ -1,6 +1,4 @@
 # The-Source-Code-and-Benchmark-Dataset-for-QuickhullDisk
-The Source Code and Benchmark Dataset for QuickhullDisk, a Quickhull-like Algorithm for Constructing the Convex Hull of 2D Disks (See more details in Wiki tab)
-
 ## The Source Code and Benchmark Dataset for QuickhullDisk, a Quickhull-like Algorithm for Constructing the Convex Hull of 2D Disks
 
 **Contributors: Chanyoung Song, Joonghyun Ryu, and Deok-Soo Kim.**
