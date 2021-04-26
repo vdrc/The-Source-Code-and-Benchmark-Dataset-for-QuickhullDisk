@@ -4,7 +4,7 @@
 using namespace std;
 
 void QuickhullDisk::find_hull_disks(const list<CircularDisk2D>& inputDisks, list<CircularDisk2D>& hullDisks, 
-                                const CotangentDisksDividingOption& cotangentDisksDividingOption)
+                                    const CotangentDisksDividingOption& cotangentDisksDividingOption)
 {
     //*. Erase input disks, output extreme disks, and time statistics used before.
     clear_convexhull();
@@ -116,12 +116,12 @@ void QuickhullDisk::divide_input_disks_into_two_initial_subsets(const list<Circu
     {
         CircularDisk2D* currDisk = *it_Disk;
 
-        if (this_disk_is_a_member_of_expanded_non_positive_set_wrt_line(currDisk, orientedLineSegment_pq))
+        if (this_disk_is_a_member_of_expanded_non_positive_set_wrt_line(currDisk, orientedLineSegment_pq, true))
         {
             initialDisks_D_right.push_back(currDisk);
         }
 
-        if (this_disk_is_a_member_of_expanded_non_negative_set_wrt_line(currDisk, orientedLineSegment_pq))
+        if (this_disk_is_a_member_of_expanded_non_negative_set_wrt_line(currDisk, orientedLineSegment_pq, true))
         {
             initialDisks_D_left.push_back(currDisk);
         }

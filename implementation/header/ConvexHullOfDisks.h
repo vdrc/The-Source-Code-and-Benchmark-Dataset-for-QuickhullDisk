@@ -22,7 +22,54 @@
 #include "CircularArc2D.h"
 #include "TimeStatistics.h"
 #include <list>
+#include <set>
 using namespace std;
+
+
+struct compare_two_disk_for_unique_existence_in_set
+{
+    bool operator()(const CircularDisk2D& disk1, const CircularDisk2D& disk2) const
+    {
+        const int tolerance = _resNeg6;
+        if (disk1.get_radius() < disk2.get_radius() - tolerance)
+        {
+            if (disk1.get_center_pt().get_x() < disk2.get_center_pt().get_x() - tolerance)
+            {
+                if (disk1.get_center_pt().get_y() < disk2.get_center_pt().get_y() - tolerance)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            if (disk1.get_center_pt().get_x() < disk2.get_center_pt().get_x() - tolerance)
+            {
+                if (disk1.get_center_pt().get_y() < disk2.get_center_pt().get_y() - tolerance)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+};
+
 
 class ConvexHullOfDisks
 {
@@ -70,9 +117,11 @@ public:
     */
     static double extract_convexhull_boundary(const list<CircularDisk2D>& hullDisks, list<pair<CircularArc2D, Line2D>>& boundaryArcNLines);
     static Line2D compute_a_CCW_oriented_tangent_line_from_disk_d1_to_d2(const CircularDisk2D& disk1, const CircularDisk2D& disk2);
+    static void   find_out_unique_disks_using_binary_search_tree(const list<CircularDisk2D>& inputDisks, list<CircularDisk2D>& uniqueDisks);
 
     inline static bool disk1_is_smaller_than_disk2(CircularDisk2D*& disk1, CircularDisk2D*& disk2);
     inline static bool disk1_is_larger_than_disk2(CircularDisk2D*& disk1,  CircularDisk2D*& disk2);
+    inline static bool disk1_id_is_smaller_than_disk2_id(CircularDisk2D& disk1, CircularDisk2D& disk2);
 
 protected:
     inline bool this_disk_is_a_member_of_expanded_non_positive_set_wrt_line(CircularDisk2D* candidateDisk, const Line2D& orientedLineSegment, const bool& includingOnPositive = false) const;
@@ -183,6 +232,14 @@ inline bool ConvexHullOfDisks::disk1_is_larger_than_disk2(CircularDisk2D*& disk1
 {
     return disk1->get_radius() > disk2->get_radius();
 }
+
+
+
+inline bool ConvexHullOfDisks::disk1_id_is_smaller_than_disk2_id(CircularDisk2D& disk1, CircularDisk2D& disk2)
+{
+    return disk1.get_ID() < disk2.get_ID();
+}
+
 
 
 #endif //_CONVEX_HULL_OF_DISKS_ 

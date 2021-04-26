@@ -61,14 +61,12 @@ bool CircularDisk2D::operator==(const CircularDisk2D& disk) const
 
 CircularDisk2D& CircularDisk2D::operator=(const CircularDisk2D& disk)
 {
-    if (this == &disk) 
+    if (this != &disk) 
     {
-        return *this;
+        set_center_pt(disk.get_center_pt());
+        set_radius(disk.get_radius());
+        set_ID(disk.get_ID());
     }
-
-    set_center_pt(disk.get_center_pt());
-    set_radius(disk.get_radius());
-    set_ID(disk.get_ID());
 
     return *this;
 }

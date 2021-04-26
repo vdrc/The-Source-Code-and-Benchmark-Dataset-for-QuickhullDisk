@@ -17,7 +17,7 @@
 #define _NULL 0
 
 const double _PI          = 3.14159265358979323846;
-const double _DegreeToRad = 57.2957795130823;
+const double _RadToDegree = 57.2957795130823; // By Joonghyun on April 18, 2019 rename from _DegreeToRad 
 
 ////////////////////////////////////////////////////////////
 ///		TOLERANCES

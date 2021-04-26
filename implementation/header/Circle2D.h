@@ -37,9 +37,9 @@ public:
     inline void set_circle(const Circle2D& circle)   { m_CenterPt = circle.m_CenterPt; m_Radius = circle.m_Radius;};
     inline void set_circle(const Point2D& center, const double& r) { m_CenterPt = center; m_Radius = r; };
 
-    inline double compute_area()      { return _PI * m_Radius * m_Radius; }
-    inline double compute_perimeter() { return 2. * _PI * m_Radius; }
-     
+    inline double compute_area() const      { return _PI * m_Radius * m_Radius; }
+    inline double compute_perimeter() const { return 2. * _PI * m_Radius; }
+
 	Point2D*   get_intersection_point(const Circle2D& circle) const;	
 	bool       is_intersected_with(const Circle2D& circle)    const;
     bool       is_this_circle_boundary_intersected_with_another_circle_boundary(const Circle2D& circle) const;

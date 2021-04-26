@@ -111,7 +111,7 @@ double ConvexHullOfDisks::extract_convexhull_boundary(const list<CircularDisk2D>
         const CircularArc2D& arc                    = arcNLine.first;
         const Line2D& line                          = arcNLine.second;
 
-        lengthOfHullBoundary += arc.angle_btw_start_and_end_pts() * arc.get_radius();
+        lengthOfHullBoundary += arc.caculate_arc_length();
         lengthOfHullBoundary += line.get_length();
     }
 
@@ -122,6 +122,16 @@ double ConvexHullOfDisks::extract_convexhull_boundary(const list<CircularDisk2D>
 Line2D ConvexHullOfDisks::compute_a_CCW_oriented_tangent_line_from_disk_d1_to_d2(const CircularDisk2D& disk1, const CircularDisk2D& disk2)
 {
     return GeometricFunction2D::compute_CCW_oriented_tangent_line_segment_from_circle_c1_to_c2(disk1, disk2);
+}
+
+
+void ConvexHullOfDisks::find_out_unique_disks_using_binary_search_tree(const list<CircularDisk2D>& inputDisks, list<CircularDisk2D>& uniqueDisks)
+{
+    set<CircularDisk2D, compare_two_disk_for_unique_existence_in_set> setOfDisks;
+    setOfDisks.insert(inputDisks.begin(), inputDisks.end());
+
+    uniqueDisks.insert(uniqueDisks.end(), setOfDisks.begin(), setOfDisks.end());
+    uniqueDisks.sort(disk1_id_is_smaller_than_disk2_id);
 }
 
 

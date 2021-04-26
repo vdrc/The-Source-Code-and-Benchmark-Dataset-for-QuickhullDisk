@@ -39,9 +39,15 @@ public:
     bool   operator==(const CircularArc2D& arc) const;
 
     double angle_btw_start_and_end_pts() const;
-
+    inline double caculate_arc_length()  const;
     void   evaluate_points_on_arc_given_resolution(const int& resolution, list<Point2D>& pointsOnArc) const;
 };
+
+inline double CircularArc2D::caculate_arc_length() const
+{
+    return angle_btw_start_and_end_pts() * get_radius();
+}
+
 
 #endif
 
