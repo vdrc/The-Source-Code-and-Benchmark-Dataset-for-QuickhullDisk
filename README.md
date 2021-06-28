@@ -9,7 +9,7 @@ It contains
 
 This is open data under the CC BY license http://creativecommons.org/licenses/by/4.0/. 
 
-For a reference, this data is same as the one in Mendeley Data ( http://dx.doi.org/10.17632/h7c6rhb4vr.1 (not active yet)).
+For a reference, this data is same as the one in Mendeley Data ( http://dx.doi.org/10.17632/h7c6rhb4vr.1 ).
 
 You can find more details in the following reference.
 **Nguyen Kieu Linh, Chanyoung Song, Joonghyun Ryu, Phan Thanh An, Nam-Dũng Haong and Deok-Soo Kim, QuickhullDisk: A Faster Convex Hull Algorithm for Disks, Applied Mathematics and Computation, 363, 2019.**
